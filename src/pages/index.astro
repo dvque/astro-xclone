@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+import AuthButton from "../components/AuthButton.astro";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 
 const supabase = createServerClient(
@@ -27,8 +28,8 @@ console.log(data, error);
 ---
 
 <Layout title="Clone de X">
+	<AuthButton />
 	<main class="">
-		<h1>Welcome to Astro. 👋</h1>
 		<pre>
 			{JSON.stringify(data, null, 2)}
 		</pre>
