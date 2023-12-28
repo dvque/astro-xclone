@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import { supabase } from "../../../lib/supabase";
-
-
+import { type Provider } from '@supabase/supabase-js';
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     const formData = await request.formData();
@@ -11,10 +10,9 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
 
     const validProviders = ["google", "github", "discord"];
 
-
     if (provider && validProviders.includes(provider)) {
         const { data, error } = await supabase.auth.signInWithOAuth({
-            provider,
+            provider: provider as Provider,
             options: {
                 redirectTo: "http://localhost:4321/api/auth/callback"
             },
