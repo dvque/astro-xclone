@@ -1,56 +1,69 @@
 ---
 import Layout from "../layouts/Layout.astro";
+const title = "Register";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (accessToken && refreshToken) {
+  return redirect("/dashboard");
+}
 ---
 
-<Layout title="Register">
-    <form class="max-w-sm mx-auto" action="/api/auth/register" method="post">
-        <div class="mb-5">
-            <label
-                for="email"
-                class="block mb-2 text-sm font-medium text-gray-900"
-                >Your email</label
-            >
-            <input
-                type="email"
-                name="email"
-                id="email"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="name@flowbite.com"
-                required
-            />
-        </div>
-        <div class="mb-5">
-            <label
-                for="password"
-                class="block mb-2 text-sm font-medium text-gray-900"
-                >Your password</label
-            >
-            <input
-                type="password"
-                name="password"
-                id="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
-            />
-        </div>
-        <!-- <div class="flex items-start mb-5">
-            <div class="flex items-center h-5">
-                <input
-                    id="remember"
-                    type="checkbox"
-                    value=""
-                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                    required
-                />
-            </div>
-            <label for="remember" class="ms-2 text-sm font-medium text-gray-900"
-                >Remember me</label
-            >
-        </div> -->
-        <button
-            type="submit"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >Submit</button
+<Layout title={title}>
+  <main class="flex-1 flex flex-col gap-4 items-center p-4 justify-center">
+    <section class="w-full max-w-md">
+      <h1
+        class="font-semibold text-2xl dark:text-zinc-100 text-zinc-900 w-full mb-1"
+      >
+        {title}
+      </h1>
+      <p class="text-zinc-500 dark:text-zinc-400 text-sm mb-8 w-full">
+        Already have an account? <a
+          href="/signin"
+          class="dark:text-blue-400 text-blue-600 underline underline-offset-2 font-medium"
+          >Sign in</a
         >
-    </form>
+      </p>
+      <form
+        action="/api/auth/register"
+        method="post"
+        class="grid grid-cols-1 gap-3 w-full"
+      >
+        <div class="grid grid-cols-1 gap-2">
+          <label
+            for="email"
+            class="font-medium dark:text-zinc-300 text-zinc-900 text-sm"
+            >Email</label
+          >
+          <input
+            id="email"
+            type="email"
+            name="email"
+            class="rounded-md py-1 px-3 dark:bg-zinc-800 dark:text-zinc-300 border bg-zinc-50 border-zinc-300 dark:border-zinc-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:bg-zinc-900 focus:bg-white focus:ring-opacity-60"
+          />
+        </div>
+        <div class="grid grid-cols-1 gap-2">
+          <label
+            for="password"
+            class="font-medium dark:text-zinc-300 text-zinc-900 text-sm"
+            >Password</label
+          >
+          <input
+            id="password"
+            type="password"
+            name="password"
+            class="rounded-md py-1 px-3 dark:bg-zinc-800 dark:text-zinc-300 border bg-zinc-50 border-zinc-300 dark:border-zinc-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:bg-zinc-900 focus:bg-white focus:ring-opacity-60"
+          />
+        </div>
+        <button
+          type="submit"
+          class="dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 border dark:border-zinc-100 rounded-md mt-4 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
+          >Register</button
+        >
+      </form>
+    </section>
+  </main>
 </Layout>
