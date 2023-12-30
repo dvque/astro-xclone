@@ -28,7 +28,7 @@ const { title } = Astro.props;
         <a href="/" class="hidden sm:block font-semibold dark:text-white">Astro</a>
         <div>
           <ul class="font-medium flex items-baseline gap-8">
-            <AuthButtons accessToken={accessToken} refreshToken={refreshToken} />
+            <AuthButtons client:visible accessToken={accessToken} refreshToken={refreshToken} />
           </ul>
         </div>
       </div>
