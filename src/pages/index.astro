@@ -3,21 +3,21 @@ import Layout from "../layouts/Layout.astro";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 
 const supabase = createServerClient(
-	import.meta.env.PUBLIC_SUPABASE_URL,
-	import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
-	{
-		cookies: {
-			get(key: string) {
-				return Astro.cookies.get(key)?.value;
-			},
-			set(key: string, value: string, options: CookieOptions) {
-				Astro.cookies.set(key, value, options);
-			},
-			remove(key: string, options) {
-				Astro.cookies.delete(key, options);
-			},
-		},
-	},
+  import.meta.env.PUBLIC_SUPABASE_URL,
+  import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
+  {
+    cookies: {
+      get(key: string) {
+        return Astro.cookies.get(key)?.value;
+      },
+      set(key: string, value: string, options: CookieOptions) {
+        Astro.cookies.set(key, value, options);
+      },
+      remove(key: string, options) {
+        Astro.cookies.delete(key, options);
+      },
+    },
+  }
 );
 
 const { data, error } = await supabase.from("posts").select("*");
@@ -26,27 +26,27 @@ console.log(data, error);
 ---
 
 <Layout title="Clone de X">
-	<div class="inline-flex rounded-md shadow-sm mb-5" role="group">
-		<div class="inline-flex rounded-md shadow-sm">
-			<a
-				href="/signin"
-				aria-current="page"
-				class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
-			>
-				Sign In
-			</a>
-			<a
-				href="/register"
-				class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
-			>
-				Register
-			</a>
-		</div>
-	</div>
+  <div class="inline-flex rounded-md shadow-sm mb-5" role="group">
+    <div class="inline-flex rounded-md shadow-sm">
+      <a
+        href="/signin"
+        aria-current="page"
+        class="px-4 py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+      >
+        Sign In
+      </a>
+      <a
+        href="/register"
+        class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+      >
+        Register
+      </a>
+    </div>
+  </div>
 
-	<main class="">
-		<pre>
+  <main class="">
+    <pre>
 			{JSON.stringify(data, null, 2)}
 		</pre>
-	</main>
+  </main>
 </Layout>
