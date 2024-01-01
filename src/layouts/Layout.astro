@@ -32,7 +32,7 @@ const {data: {session}} = await supabase.auth.getSession();
         <div>
           <ul class="font-medium flex items-baseline gap-8">
           
-            <AuthButtons session={session} />
+            <AuthButtons client:visible session={session} />
           </ul>
         </div>
       </div>
