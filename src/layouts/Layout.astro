@@ -1,5 +1,6 @@
 ---
 import AuthButtons from '../components/AuthButtons';
+import {supabase} from '../lib/supabase';
 
 interface Props {
   title: string;
@@ -10,6 +11,8 @@ let accessToken = cookies.get("sb-access-token");
 let refreshToken = cookies.get("sb-refresh-token");
 
 const { title } = Astro.props;
+
+const {data: {session}} = await supabase.auth.getSession();
 ---
 
 <!doctype html>
@@ -28,7 +31,8 @@ const { title } = Astro.props;
         <a href="/" class="hidden sm:block font-semibold dark:text-white">Astro</a>
         <div>
           <ul class="font-medium flex items-baseline gap-8">
-            <AuthButtons client:visible accessToken={accessToken} refreshToken={refreshToken} />
+          
+            <AuthButtons session={session} />
           </ul>
         </div>
       </div>
