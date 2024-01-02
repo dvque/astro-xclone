@@ -1,9 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Counter from "../components/Counter.jsx";
+import PostCard from "../components/PostCard.astro";
 import { supabase } from "../lib/supabase";
 
-const { data, error } = await supabase.from("posts").select("*, users(*)");
+const { data, error } = await supabase.from("posts").select("*, users(name, user_name, avatar_url)");
 
 console.log(data, error);
 ---
@@ -30,6 +31,10 @@ console.log(data, error);
   <Counter client:visible>
     <h1>Hello, Solid!</h1>
   </Counter>
+
+
+  <PostCard />
+
 
   <main class="">
     <pre>
