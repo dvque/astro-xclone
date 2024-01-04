@@ -5,8 +5,7 @@
         "node": true
     },
     "extends": [
-        "standard-with-typescript",
-        "plugin:react/recommended"
+        "standard-with-typescript"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -16,6 +15,7 @@
     "rules": {
         "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/no-misused-promises": "off"
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/react/no-unknown-property": "off"
     }
 }

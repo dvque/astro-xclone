@@ -12,7 +12,7 @@ console.log(data, error);
 <Layout title="Clone de X">
   <section class="py-24 px-4 w-full flex flex-col items-center gap-4">
     {data!.map(post =>(
-      <div class="w-96"> <!-- Set the width using Tailwind's w utility -->
+      <div class="w-96">
         <PostCard 
             userFullName={post.users.name} 
             userName={post.users.user_name}} 

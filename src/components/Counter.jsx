@@ -1,10 +1,10 @@
-import { createSignal } from 'solid-js';
+import { createSignal } from 'solid-js'
 
-const [count, setCount] = createSignal(0);
+const [count, setCount] = createSignal(0)
 
-export default function Counter({ children }) {
-  const add = () => setCount(count() + 1);
-  const subtract = () => setCount(count() - 1);
+export default function Counter ({ children }) {
+  const add = () => setCount(count() + 1)
+  const subtract = () => setCount(count() - 1)
 
   return (
     <>
@@ -15,5 +15,5 @@ export default function Counter({ children }) {
       </div>
       <div class="counter-message">{children}</div>
     </>
-  );
+  )
 }
