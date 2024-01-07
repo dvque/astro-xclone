@@ -1,49 +1,51 @@
-import type { APIRoute } from "astro";
-import { supabase } from "../../../lib/supabase";
-import { type Provider } from '@supabase/supabase-js';
+import type { APIRoute } from 'astro'
+import { supabase } from '../../../lib/supabase'
+import { type Provider } from '@supabase/supabase-js'
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
-    const formData = await request.formData();
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
-    const provider = formData.get("provider")?.toString();
+  const formData = await request.formData()
+  const email = formData.get('email')?.toString()
+  const password = formData.get('password')?.toString()
+  const provider = formData.get('provider')?.toString()
 
-    const validProviders = ["google", "github", "discord"];
+  const validProviders = ['google', 'github', 'discord']
 
-    if (provider && validProviders.includes(provider)) {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: provider as Provider,
-            options: {
-                redirectTo: "http://localhost:4321/api/auth/callback"
-            },
-        });
+  if ((provider != null) && validProviders.includes(provider)) {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: provider as Provider,
+      options: {
+        redirectTo: 'http://localhost:4321/api/auth/callback'
+      }
+    })
 
-        if (error) {
-            return new Response(error.message, { status: 500 });
-        }
-
-        return redirect(data.url);
+    if (error != null) {
+      return new Response(error.message, { status: 500 })
     }
 
-    if (!email || !password) {
-        return new Response("Email and password are required", { status: 400 });
-    }
+    return redirect(data.url)
+  }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-    });
+  if ((email == null) || (password == null)) {
+    return new Response('Email and password are required', { status: 400 })
+  }
 
-    if (error) {
-        return new Response(error.message, { status: 500 });
-    }
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  })
 
-    const { access_token, refresh_token } = data.session;
-    cookies.set("sb-access-token", access_token, {
-        path: "/",
-    });
-    cookies.set("sb-refresh-token", refresh_token, {
-        path: "/",
-    });
-    return redirect("/dashboard");
-};
+  if (error != null) {
+    return new Response(error.message, { status: 500 })
+  }
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const { access_token, refresh_token } = data.session
+
+  cookies.set('sb-access-token', access_token, {
+    path: '/'
+  })
+  cookies.set('sb-refresh-token', refresh_token, {
+    path: '/'
+  })
+  return redirect('/dashboard')
+}
