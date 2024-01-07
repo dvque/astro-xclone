@@ -1,18 +1,19 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Counter from "../components/Counter.jsx";
-import PostCard from "../components/PostCard.astro";
-import PostList  from "../components/PostList.tsx";
+import PostList from "../components/PostList.tsx";
 import { supabase } from "../lib/supabase";
 
-const { data, error } = await supabase.from("posts").select("*, users(name, user_name, avatar_url)");
+const { data, error } = await supabase
+  .from("posts")
+  .select("*, users(name, user_name, avatar_url)");
 
 console.log(data, error);
 ---
 
 <Layout title="Clone de X">
   <section class="py-24 px-4 w-full flex flex-col items-center gap-4">
-    {data!.map(post =>(
+    <!-- {data!.map(post =>(
       <div class="w-96">
         <PostCard 
             userFullName={post.users.name} 
@@ -21,10 +22,11 @@ console.log(data, error);
             content={post.content} 
           />
         </div>
-    ))}
+    ))} -->
+    <PostList client:visible />
   </section>
 
-  <PostList client:only="solid-js" />
+  <!-- <PostList client:only="solid-js" /> -->
 
   <Counter client:visible>
     <h1>Hello, Solid!</h1>
