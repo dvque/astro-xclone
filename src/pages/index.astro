@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Counter from "../components/Counter.jsx";
 import PostList from "../components/PostList.tsx";
 import { supabase } from "../lib/supabase";
+import ComposePost from "../components/ComposePost.astro";
 
 const { data, error } = await supabase
   .from("posts")
@@ -23,6 +24,7 @@ console.log(data, error);
           />
         </div>
     ))} -->
+    <ComposePost />
     <PostList client:visible />
   </section>
 
