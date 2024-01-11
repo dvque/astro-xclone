@@ -1,21 +1,37 @@
-import { Show, For, createSignal } from 'solid-js'
+import { Show, For, createSignal, onMount } from 'solid-js'
 import { supabase } from '../lib/supabase'
 import { type Post } from '../env.d'
 
-const { data, error } = await supabase
-  .from('posts')
-  .select('*, users(name, user_name, avatar_url)')
-
-console.log(data, error)
+// const { data, error } = await supabase
+//   .from('posts')
+//   .select('*, users(name, user_name, avatar_url)')
+// console.log(data, error)
 
 export default function PostList () {
+  const [data, setData] = createSignal<Post[] | null>([])
+
+  onMount(async () => {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*, users(name, user_name, avatar_url)')
+
+    console.log(data, error)
+
+    if (error != null) {
+      console.log(error)
+    } else {
+      setData(data)
+    }
+  })
+
   return (
 
       <Show
-        when={data != null && data.length > 0}
+        when={data != null && data().length > 0}
         fallback={<p class="text-center py-8">There are no posts</p>}
       >
-        <For each={data}>{(post: Post) => <>{<Card post={post} />} </>}</For>
+        <For each={data()}>{(post: Post) => <>{<Card post={post} />} </>}</For>
+
       </Show>
 
   )
